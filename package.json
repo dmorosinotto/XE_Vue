@@ -1,0 +1,22 @@
+{
+    "name": "xe_vue",
+    "version": "1.0.0",
+    "description": "XE Vue Session",
+    "keywords": [
+        "VueJS",
+        "TS",
+        "TypeScript",
+        "XE",
+        "XE Session"
+    ],
+    "main": "index.html",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "http-server": "^0.11.1",
+        "@vue/cli": "^3.5.0"
+    },
+    "author": "Daniele Morosinotto <d.morosinotto@icloud.com>",
+    "license": "MIT"
+}
