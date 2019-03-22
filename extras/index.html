@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 303: reactivity watchers</title>
+		<title>XE Vue 304: v-slot</title>
 		<!-- 19 -->
 		<style>
 			.java {
@@ -76,12 +76,16 @@
 			    <h2>You can <a href="https://vuejs.org/v2/guide/components-edge-cases.html#X-Templates">externalize template</a></h2>
 			    {{speaker}}<!-- 14 --><button @click="speaker+='<3'; $emit('like', speaker)"><!-- 25 -->I &hearts;</button>
 			    <!-- 12 -->
-			    <article>{{ title }} <!-- 13 -->
+			    <article><!-- 13 -->
 			        <i :style="{color:  diffDays<0 ? 'red' : 'green', 'font-size': 24/diffDays + 'px'}"><!-- 21 -->
 			            {{ timeAgo }}</i> </article>
 			    <aside>{{ eventDate | dateformat('dd/MM/yy alle HH:mm') }}</aside>
-			    <!-- 16 -->
-			    <button @click="addDay(+1)">+</button> <button @click="addDay(-1)">-</button>
+			    <!-- 28 -->
+			    <big-title>
+			        {{ title }}
+			        <!-- 16 -->
+			        <button @click="addDay(+1)">+</button> <button @click="addDay(-1)">-</button>
+			    </big-title>
 			</div>
 		</script>
 
@@ -92,6 +96,11 @@
 					.split(" ")
 					.map(s => s.charAt(0).toUpperCase() + s.substr(1))
 					.join(" ");
+			});
+
+			// 28
+			Vue.component("bigTitle", {
+				template: "<h1><slot></slot></h1>"
 			});
 
 			// 11
