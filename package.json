@@ -11,7 +11,7 @@
 	],
 	"main": "index.html",
 	"scripts": {
-		"start": "npm run basics",
+		"start": "npm run clisfc",
 		"basics": "http-server basics/ -c-1 --cors -o",
 		"extras": "http-server extras/ -c-1 --cors -o",
 		"preclisfc": "cd clisfc  &&  vue-cli-service build  &&  cd ..",

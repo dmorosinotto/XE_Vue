@@ -1,0 +1,31 @@
+{
+	"name": "clisfc",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build"
+	},
+	"dependencies": {
+		"vue": "^2.6.10",
+		"vue-class-component": "^7.0.1",
+		"vue-property-decorator": "^8.1.0",
+		"vue-router": "^3.0.2"
+	},
+	"devDependencies": {
+		"@vue/cli-plugin-typescript": "^3.5.1",
+		"@vue/cli-service": "^3.5.1",
+		"typescript": "^3.3.4000",
+		"vue-template-compiler": "^2.6.10"
+	},
+	"postcss": {
+		"plugins": {
+			"autoprefixer": {}
+		}
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"not ie <= 8"
+	]
+}
