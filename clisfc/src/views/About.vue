@@ -14,6 +14,9 @@ import XeEvent from "../components/XeEvent.vue";
   components: { XeEvent } //203a
 })
 export default class About extends Vue {
-  //
+  // 203b copy from 116 data // 10
+  arr = true;
+  date = "2019-03-22T20:00:00"; // 15
+  msg = "World"; // 3
 }
 </script>
