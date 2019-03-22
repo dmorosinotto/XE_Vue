@@ -4,15 +4,19 @@
     <!-- 203d copy from 116 #app -->
     <hr />
     <div v-if="arr">
-      <!-- 17 -->
-      <xe-event :title="msg" v-bind:event-date.sync="date" @like.once="alert"
-        ><!-- 12 + 14 --></xe-event
-      >
-      <!-- 15 + 16+bonus .sync -->
+      <!-- 205c for loop to show all events -->
+      <xe-event
+        v-for="evt in arr"
+        :key="evt.EventId"
+        :title="evt.Title"
+        v-bind:event-date.sync="evt.EventDate"
+        @like.once="alert(evt)"
+      ></xe-event>
     </div>
+    <div v-else>NO XE SESSIONS...</div>
     <hr />
-    <label>On parent DATE = <input v-model="date"/></label>
-    <button @click="arr = !arr"><!-- 17 -->TOGGLE</button>
+    <!-- 205c force reload data -->
+    <button @click="load(true)">RELOAD</button>
   </div>
 </template>
 
@@ -46,9 +50,9 @@ export default class About extends Vue {
     console.groupEnd();
   }
   // 14
-  alert(e: any) {
+  alert(e: http.IEvent) {
     this.doSomething(e);
-    window.alert(`Handled LIKE $event ->${e}`);
+    window.alert(`Handled LIKE $event ->${e.Abstract}`);
   }
 
   // 205a use logic to call http API + handle _cache
