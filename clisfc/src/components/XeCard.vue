@@ -64,6 +64,14 @@ export default class XeCard extends Vue {
     // 16+bonus //TODO: MUST USE $emit EVENT update:EventDate -> .sync
     this.$emit("update:EventDate", d.toISOString());
   }
+
+  // 206e watcher -> method + @Watch decorator (+ options if needed)
+  @Watch("like") storeLike() {
+    window.localStorage.setItem(
+      "XE_" + (this.EventId || 0),
+      this.like.toString()
+    );
+  }
 }
 </script>
 
