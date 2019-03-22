@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>XE Vue 101: variable {{ interpolation }}</title>
+	</head>
+	<body>
+		<h1>Hello</h1>
+		<!-- 2 -->
+		<div id="app">
+			<!-- 3-->
+			{{ msg }}!!!
+		</div>
+
+		<!-- 1 -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script>
+			// 1
+			var app = new Vue({
+				el: "#app", // 2
+				data: {
+					msg: "World" // 3
+				}
+			});
+
+			//TODO: OPEN CONSOLE AND RUN
+			//app.msg = "XE"; // 3+bonus
+		</script>
+	</body>
+</html>
