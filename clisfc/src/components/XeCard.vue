@@ -72,6 +72,23 @@ export default class XeCard extends Vue {
       this.like.toString()
     );
   }
+
+  // 206f life-cycle hooks READ MORE: https://vuejs.org/v2/guide/instance.html#Lifecycle-Diagram
+  beforeCreate() {
+    console.log("@BEFORECREATE it's not jet initialized ", this.like);
+  }
+  created() {
+    let saved = parseInt(
+      window.localStorage.getItem("XE_" + (this.EventId || 0)) || "",
+      10
+    );
+    this.like = !isNaN(saved) ? saved : 0;
+    console.log("@CREATED load from localStorage", this.EventId, this.like);
+  }
+  destroyed() {
+    console.log("@DESTROYED save to localStorage", this.EventId, this.like);
+    this.storeLike();
+  }
 }
 </script>
 
