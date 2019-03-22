@@ -27,6 +27,19 @@ import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 export default class XeCard extends Vue {
   // 206a data() -> instance fields (must be initialized)
   like: number = 0;
+
+  // 206b props -> fields with @Prop decorator + options
+  @Prop() Abstract!: string;
+  @Prop({ type: String }) Title!: string;
+  @Prop({ required: true }) EventId!: number;
+  @Prop({
+    validator: function(value: string | Date) {
+      // The value must be a valid Date string
+      let d = new Date(String(value));
+      return d && !isNaN(d.getTime());
+    }
+  })
+  EventDate!: string;
 }
 </script>
 
