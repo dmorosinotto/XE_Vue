@@ -55,6 +55,15 @@ export default class XeCard extends Vue {
     const event = new Date(String(this.EventDate)).getTime();
     return Math.floor((event - today) / 1000 / 60 / 60 / 24); //gg
   }
+
+  // 206d methods -> simple method + TS annotation
+  addDay(n: number) {
+    let d = new Date(String(this.EventDate));
+    d.setDate(d.getDate() + n);
+    //this.EventDate = d.toISOString(); //DON'T WORK props IS ONE-WAY DOWN
+    // 16+bonus //TODO: MUST USE $emit EVENT update:EventDate -> .sync
+    this.$emit("update:EventDate", d.toISOString());
+  }
 }
 </script>
 
