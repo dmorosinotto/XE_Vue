@@ -1,6 +1,18 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <!-- 203d copy from 116 #app -->
+    <hr />
+    <div v-if="arr">
+      <!-- 17 -->
+      <xe-event :title="msg" v-bind:event-date.sync="date" @like.once="alert"
+        ><!-- 12 + 14 --></xe-event
+      >
+      <!-- 15 + 16+bonus .sync -->
+    </div>
+    <hr />
+    <label>On parent DATE = <input v-model="date"/></label>
+    <button @click="arr = !arr"><!-- 17 -->TOGGLE</button>
   </div>
 </template>
 
