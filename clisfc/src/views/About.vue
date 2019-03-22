@@ -21,13 +21,15 @@ import Vue from "vue";
 import Component from "vue-class-component";
 // 203a import XeEvent component and register it
 import XeEvent from "../components/XeEvent.vue";
+// 205a import service for http + _cache
+import * as http from "../utils/service";
 
 @Component({
   components: { XeEvent } //203a
 })
 export default class About extends Vue {
   // 203b copy from 116 data // 10
-  arr = true;
+  arr: http.IEvent[] = [];
   date = "2019-03-22T20:00:00"; // 15
   msg = "World"; // 3
 
@@ -39,6 +41,15 @@ export default class About extends Vue {
   alert(e: any) {
     this.doSomething(e);
     window.alert(`Handled LIKE $event ->${e}`);
+  }
+
+  // 205a use logic to call http API + handle _cache
+  async load(force = false) {
+    this.arr = await http.getAll(force);
+  }
+
+  mounted() {
+    this.load();
   }
 }
 </script>
