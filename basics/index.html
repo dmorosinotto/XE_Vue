@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 114: modifiers + two-way v-bind.sync</title>
+		<title>XE Vue 115: props Type/validator + Life-cycle hooks</title>
 	</head>
 	<body>
 		<h1>Hello</h1>
@@ -41,10 +41,14 @@
 			<button @click="update(Math.floor(Math.random()*arr.length))">Update</button>
 			<!-- 11 -->
 			<hr />
-			<xe-event :title="msg" v-bind:event-date="date" @like.once="alert"><!-- 12 + 14 --></xe-event>
-			<!-- 15 + 16+bonus .sync -->
+			<div v-if="arr">
+				<!-- 17 -->
+				<xe-event :title="msg" v-bind:event-date.sync="date" @like.once="alert"><!-- 12 + 14 --></xe-event>
+				<!-- 15 + 16+bonus .sync -->
+			</div>
 			<hr />
 			<label>On parent DATE = <input v-model="date"/></label>
+			<button @click="arr=!arr"><!-- 17 -->TOGGLE</button>
 		</div>
 
 		<!-- 1 -->
@@ -79,7 +83,21 @@
 				data() {
 					return { speaker: "Pluto" };
 				},
-				props: ["title", "eventDate"], // 12
+				props: {
+					// 12 ["title", "eventDate"],
+					title: String,
+					eventDate: {
+						//18    https://vuejs.org/v2/guide/components-props.html#Prop-Validation
+						type: String,
+						//required: true
+						//default: new Date().toISOString()
+						validator: function(value) {
+							// The value must be a valid Date string
+							let d = new Date(String(value));
+							return d && !isNaN(d.getTime());
+						}
+					}
+				},
 				computed: {
 					// 13
 					timeAgo: function() {
@@ -100,10 +118,23 @@
 					addDay: function(n) {
 						let d = new Date(String(this.eventDate));
 						d.setDate(d.getDate() + n);
-						this.eventDate = d.toISOString(); //DON'T WORK props IS ONE-WAY DOWN
+						//this.eventDate = d.toISOString(); //DON'T WORK props IS ONE-WAY DOWN
 						// 16+bonus //TODO: MUST USE $emit EVENT update:eventDate -> .sync
-						// this.$emit("update:eventDate", d.toISOString());
+						this.$emit("update:eventDate", d.toISOString());
 					}
+				},
+				// 17 READ MORE: https://vuejs.org/v2/guide/instance.html#Lifecycle-Diagram
+				beforeCreate() {
+					console.log("life-cycle hooks BEFORECREATE @" /*, this.eventDate */); //NOT JET INITIALIZED!!!
+				},
+				created() {
+					console.log("life-cycle hooks CREATED @", this.eventDate);
+				},
+				updated() {
+					console.log("life-cycle hooks UPDATED @", this.eventDate, this.title);
+				},
+				destroyed() {
+					console.log("life-cycle hooks DESTROYED @", this.eventDate);
 				},
 				template: "#xe-event-tpl" //"<div>{{speaker}}</div>" // 11+bonus "#xe-event-tpl"
 			});
