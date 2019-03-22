@@ -23,3 +23,17 @@ export interface IEvent extends IArgument {
 	>;
 }
 export type EventOrNull = Nullable<IEvent>;
+
+// 204b private helpers + local _cache
+const _baseurl = "https://www.xedotnet.org/umbraco/api/EventApi";
+function _safeGet<T>(url: string, def: T): Promise<T> {
+	return axios
+		.get<T>(url)
+		.then(resp => resp.data)
+		.catch(err => {
+			console.error("HTTP GET", url, "ERROR", err);
+			return def; //TODO: maybe log Error somewhere...
+		});
+}
+
+let _cache: IEvent[] = [];
