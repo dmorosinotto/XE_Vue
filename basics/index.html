@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 111: Props + v-bind</title>
+		<title>XE Vue 112: Computed | format params</title>
 	</head>
 	<body>
 		<h1>Hello</h1>
@@ -53,8 +53,8 @@
 			    <h2>You can <a href="https://vuejs.org/v2/guide/components-edge-cases.html#X-Templates">externalize template</a></h2>
 			    {{speaker}}
 			    <!-- 12 -->
-			    <article>{{ title }} </article>
-			    <aside>{{ eventDate }}</aside>
+			    <article>{{ title }} <!-- 13 --> <i>{{ timeAgo }}</i> </article>
+			    <aside>{{ eventDate | dateformat('dd/MM/yy alle HH:mm') }}</aside>
 			</div>
 		</script>
 
@@ -75,7 +75,34 @@
 					return { speaker: "Pluto" };
 				},
 				props: ["title", "eventDate"], // 12
+				computed: {
+					// 13
+					timeAgo: function() {
+						return this.diffDays > 0
+							? `tra ${this.diffDays}gg`
+							: this.diffDays < -1
+							? `era ${-this.diffDays}gg fà`
+							: "oggi";
+					},
+					diffDays: function() {
+						const today = new Date().getTime(); //millisecs of today
+						const event = new Date(String(this.eventDate)).getTime();
+						return Math.floor((event - today) / 1000 / 60 / 60 / 24); //gg
+					}
+				},
 				template: "#xe-event-tpl" //"<div>{{speaker}}</div>" // 11+bonus "#xe-event-tpl"
+			});
+			// 13+bonus
+			const pad2 = n => ("00" + n).substr(-2);
+			Vue.filter("dateformat", function(value, fmt) {
+				const d = new Date(String(value));
+				return (fmt || "dd/MM/yyyy") // 13+bonus
+					.replace("dd", pad2(d.getDate()))
+					.replace("MM", pad2(d.getMonth() + 1))
+					.replace("yyyy", d.getFullYear())
+					.replace("yy", pad2(d.getFullYear()))
+					.replace("HH", pad2(d.getHours()))
+					.replace("mm", pad2(d.getMinutes()));
 			});
 
 			// 1
