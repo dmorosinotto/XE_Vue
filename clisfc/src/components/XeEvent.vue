@@ -31,8 +31,13 @@
 </template>
 
 <script>
-// 201b copy from 116 // 11 + add Vue.export to enable TS intellisence
-export default {
+// 201c add Vue.export + ts-check + JSDOC to enable TS intellisence
+//READ MORE https://blog.usejournal.com/type-vue-without-typescript-b2b49210f0b
+//@ts-check
+import Vue from "vue";
+
+// 201b copy from 116 // 11
+export default Vue.extend({
   //data: { speaker: "Pluto" }, //THIS DOESN'T WORKS!
   //MUST BE A FUNCITION THAT RETURN INSTANCE DATA !!!
   data() {
@@ -46,6 +51,7 @@ export default {
       type: String,
       //required: true
       //default: new Date().toISOString()
+      /** @param value {string|Date} */
       validator: function(value) {
         // The value must be a valid Date string
         let d = new Date(String(value));
@@ -55,6 +61,7 @@ export default {
   },
   computed: {
     // 13
+    /** @returns {string} */
     timeAgo: function() {
       return this.diffDays > 0
         ? `tra ${this.diffDays}gg`
@@ -62,6 +69,7 @@ export default {
         ? `era ${-this.diffDays}gg fà`
         : "oggi";
     },
+    /** @returns {number} */
     diffDays: function() {
       const today = new Date().getTime(); //millisecs of today
       const event = new Date(String(this.eventDate)).getTime();
@@ -70,6 +78,7 @@ export default {
   },
   methods: {
     // 16
+    /** @param n {number} */
     addDay: function(n) {
       let d = new Date(String(this.eventDate));
       d.setDate(d.getDate() + n);
@@ -90,9 +99,8 @@ export default {
   },
   destroyed() {
     console.log("life-cycle hooks DESTROYED @", this.eventDate);
-  },
-  template: "#xe-event-tpl" //"<div>{{speaker}}</div>" // 11+bonus "#xe-event-tpl"
-};
+  }
+});
 </script>
 
 <style scoped>
