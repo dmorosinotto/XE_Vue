@@ -34,8 +34,16 @@ export default class About extends Vue {
   msg = "World"; // 3
 
   // 203c copy from 116 methods // 6
-  doSomething(txt: any) {
-    this.msg = "XE" + (txt || "java"); // 6+bonus
+  doSomething(e: http.IEvent) {
+    //205b print-out the current event data
+    console.group(e.Title);
+    console.warn(e.EventId, e.Abstract);
+    e.Sessions.forEach(s => {
+      console.group(s.Title);
+      console.dir(s);
+      console.groupEnd();
+    });
+    console.groupEnd();
   }
   // 14
   alert(e: any) {
