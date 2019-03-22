@@ -40,6 +40,21 @@ export default class XeCard extends Vue {
     }
   })
   EventDate!: string;
+
+  // 206c computed -> getters + TS return annotation
+  get timeAgo(): string {
+    return this.diffDays > 0
+      ? `tra ${this.diffDays}gg`
+      : this.diffDays < -1
+      ? `era ${-this.diffDays}gg fà`
+      : "oggi";
+  }
+
+  get diffDays(): number {
+    const today = new Date().getTime(); //millisecs of today
+    const event = new Date(String(this.EventDate)).getTime();
+    return Math.floor((event - today) / 1000 / 60 / 60 / 24); //gg
+  }
 }
 </script>
 
