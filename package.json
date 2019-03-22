@@ -1,22 +1,31 @@
 {
-    "name": "xe_vue",
-    "version": "1.0.0",
-    "description": "XE Vue Session",
-    "keywords": [
-        "VueJS",
-        "TS",
-        "TypeScript",
-        "XE",
-        "XE Session"
-    ],
-    "main": "index.html",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "devDependencies": {
-        "http-server": "^0.11.1",
-        "@vue/cli": "^3.5.0"
-    },
-    "author": "Daniele Morosinotto <d.morosinotto@icloud.com>",
-    "license": "MIT"
+	"name": "xe_vue",
+	"version": "1.0.0",
+	"description": "XE Vue Session",
+	"keywords": [
+		"VueJS",
+		"TS",
+		"TypeScript",
+		"XE",
+		"XE Session"
+	],
+	"main": "index.html",
+	"scripts": {
+		"start": "npm run basics",
+		"basics": "http-server basics/ -c-1 --cors -o",
+		"extras": "http-server extras/ -c-1 --cors -o",
+		"preclisfc": "cd clisfc  &&  vue-cli-service build  &&  cd ..",
+		"clisfc": "http-server clisfc/dist/ -c-1 --cors -o",
+		"https": "http-server basics/ -c-1 --cors --ssl -C ~/ssl-cert/localhost.crt -K ~/ssl-cert/localhost.key"
+	},
+	"devDependencies": {
+		"http-server": "^0.11.1",
+		"@vue/cli": "^3.5.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dmorosinotto/XE_Vue.git"
+	},
+	"author": "Daniele Morosinotto <d.morosinotto@icloud.com>",
+	"license": "MIT"
 }
