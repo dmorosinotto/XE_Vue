@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 304: v-slot</title>
+		<title>XE Vue 305: render function</title>
 		<!-- 19 -->
 		<style>
 			.java {
@@ -81,7 +81,7 @@
 			            {{ timeAgo }}</i> </article>
 			    <aside>{{ eventDate | dateformat('dd/MM/yy alle HH:mm') }}</aside>
 			    <!-- 28 -->
-			    <big-title>
+			    <big-title :size="2" ><!-- 29+bonus Math.abs(diffDays) -->
 			        {{ title }}
 			        <!-- 16 -->
 			        <button @click="addDay(+1)">+</button> <button @click="addDay(-1)">-</button>
@@ -100,7 +100,29 @@
 
 			// 28
 			Vue.component("bigTitle", {
-				template: "<h1><slot></slot></h1>"
+				props: ["size"],
+				/* // 29+bonus
+                template: `
+                    <h1 v-if="size === 1">
+                        <slot></slot>
+                    </h1>
+                    <h2 v-else-if="size === 2">
+                        <slot></slot>
+                    </h2>
+                    ...
+                    <h6 v-else-if="size === 6">
+                        <slot></slot>
+                    </h6>
+                ` */
+				render(createElement) {
+					// 29 https://vuejs.org/v2/guide/render-function.html#The-Data-Object-In-Depth
+					console.table("RENDER FUNCITON >>> ", "H" + this.size, this.$slots);
+					return createElement(
+						"h" + this.size || 1, //tagname of the VNode
+						{ class: "xe" }, //attributes, props, events
+						this.$slots.default //array of childrens ...
+					);
+				}
 			});
 
 			// 11
