@@ -10,7 +10,7 @@
         :key="evt.EventId"
         :title="evt.Title"
         v-bind:event-date.sync="evt.EventDate"
-        @like.once="alert(evt)"
+        @like="alert(evt)"
       ></xe-event>
     </div>
     <div v-else>NO XE SESSIONS...</div>
@@ -53,6 +53,8 @@ export default class About extends Vue {
   alert(e: http.IEvent) {
     this.doSomething(e);
     window.alert(`Handled LIKE $event ->${e.Abstract}`);
+    // 209 imperative navigate to detail page -> passing id = e.EventId
+    this.$router.push({ name: "detail", params: { id: e.EventId.toString() } });
   }
 
   // 205a use logic to call http API + handle _cache
