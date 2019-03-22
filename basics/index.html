@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 109: v-for</title>
+		<title>XE Vue 110: Vue component</title>
 	</head>
 	<body>
 		<h1>Hello</h1>
@@ -31,18 +31,30 @@
 			<code v-show="msg.includes('java')">JAVA (never) RULEZ but is still there...</code>
 			<!-- 10 -->
 			<ul>
-				<li v-for="item in arr">
-					<!-- 10+bonus <li v-for="(item,idx) in arr" :key="idx">
-                    <b>{{typeof item}}</b> @{{ idx }} -->
+				<!-- 10+bonus -->
+				<li v-for="(item,idx) in arr" :key="idx">
+					<b>{{typeof item}}</b> @{{ idx }}
 					{{ item }}
 				</li>
 			</ul>
 			<button @click="addTo(true)">Start</button><button @click="addTo()">End</button>
 			<button @click="update(Math.floor(Math.random()*arr.length))">Update</button>
+			<!-- 11 -->
+			<hr />
+			<xe-event></xe-event>
 		</div>
 
 		<!-- 1 -->
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+		<!-- 11+bonus 
+        <script type="text/x-template" id="xe-event-tpl">
+            <div>
+                <h2>You can <a href="https://vuejs.org/v2/guide/components-edge-cases.html#X-Templates">externalize template</a></h2>
+                {{speaker}}
+            </div>
+        </script>
+        -->
 		<script>
 			// 5+bonus
 			Vue.filter("capitalize", function(str) {
@@ -50,6 +62,16 @@
 					.split(" ")
 					.map(s => s.charAt(0).toUpperCase() + s.substr(1))
 					.join(" ");
+			});
+
+			// 11
+			Vue.component("xe-event", {
+				//data: { speaker: "Pluto" }, //THIS DOESN'T WORKS!
+				//MUST BE A FUNCITION THAT RETURN INSTANCE DATA !!!
+				data() {
+					return { speaker: "Pluto" };
+				},
+				template: "<div>{{speaker}}</div>" // 11+bonus "#xe-event-tpl"
 			});
 
 			// 1
