@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 305: render function</title>
+		<title>XE Vue 306: scoped slot</title>
 		<!-- 19 -->
 		<style>
 			.java {
@@ -81,8 +81,10 @@
 			            {{ timeAgo }}</i> </article>
 			    <aside>{{ eventDate | dateformat('dd/MM/yy alle HH:mm') }}</aside>
 			    <!-- 28 -->
-			    <big-title :size="2" ><!-- 29+bonus Math.abs(diffDays) -->
+			    <big-title :size="Math.abs(diffDays)" ><!-- 29+bonus -->
 			        {{ title }}
+			        <!-- 30 -->
+			        <xe-more v-slot="ctx">{{ctx.internal}}</xe-more>
 			        <!-- 16 -->
 			        <button @click="addDay(+1)">+</button> <button @click="addDay(-1)">-</button>
 			    </big-title>
@@ -101,19 +103,6 @@
 			// 28
 			Vue.component("bigTitle", {
 				props: ["size"],
-				/* // 29+bonus
-                template: `
-                    <h1 v-if="size === 1">
-                        <slot></slot>
-                    </h1>
-                    <h2 v-else-if="size === 2">
-                        <slot></slot>
-                    </h2>
-                    ...
-                    <h6 v-else-if="size === 6">
-                        <slot></slot>
-                    </h6>
-                ` */
 				render(createElement) {
 					// 29 https://vuejs.org/v2/guide/render-function.html#The-Data-Object-In-Depth
 					console.table("RENDER FUNCITON >>> ", "H" + this.size, this.$slots);
@@ -123,6 +112,19 @@
 						this.$slots.default //array of childrens ...
 					);
 				}
+			});
+
+			// 30
+			Vue.component("xe-more", {
+				data: () => ({
+					internal: "README VIA v-slot",
+					readmore: "https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots"
+				}),
+				template: `<a :href="readmore" style='color:green'>
+                                <slot v-bind="{internal}">
+                                    DEFAULT SLOT CONTENT
+                                </slot>
+                            </a>`
 			});
 
 			// 11
