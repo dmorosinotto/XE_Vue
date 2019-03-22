@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 113: $emit('event') + v-on</title>
+		<title>XE Vue 114: modifiers + two-way v-bind.sync</title>
 	</head>
 	<body>
 		<h1>Hello</h1>
@@ -41,7 +41,10 @@
 			<button @click="update(Math.floor(Math.random()*arr.length))">Update</button>
 			<!-- 11 -->
 			<hr />
-			<xe-event v-bind:title="msg" event-date="2019-03-22T20:00:00" v-on:like="alert"><!-- 12 + 14 --></xe-event>
+			<xe-event :title="msg" v-bind:event-date="date" @like.once="alert"><!-- 12 + 14 --></xe-event>
+			<!-- 15 + 16+bonus .sync -->
+			<hr />
+			<label>On parent DATE = <input v-model="date"/></label>
 		</div>
 
 		<!-- 1 -->
@@ -55,6 +58,8 @@
 			    <!-- 12 -->
 			    <article>{{ title }} <!-- 13 --> <i>{{ timeAgo }}</i> </article>
 			    <aside>{{ eventDate | dateformat('dd/MM/yy alle HH:mm') }}</aside>
+			    <!-- 16 -->
+			    <button @click="addDay(+1)">+</button> <button @click="addDay(-1)">-</button>
 			</div>
 		</script>
 
@@ -90,6 +95,16 @@
 						return Math.floor((event - today) / 1000 / 60 / 60 / 24); //gg
 					}
 				},
+				methods: {
+					// 16
+					addDay: function(n) {
+						let d = new Date(String(this.eventDate));
+						d.setDate(d.getDate() + n);
+						this.eventDate = d.toISOString(); //DON'T WORK props IS ONE-WAY DOWN
+						// 16+bonus //TODO: MUST USE $emit EVENT update:eventDate -> .sync
+						// this.$emit("update:eventDate", d.toISOString());
+					}
+				},
 				template: "#xe-event-tpl" //"<div>{{speaker}}</div>" // 11+bonus "#xe-event-tpl"
 			});
 			// 13+bonus
@@ -111,6 +126,7 @@
 				data: {
 					// 10
 					arr: ["Pippo", 123, { e: "Pluto" }],
+					date: "2019-03-22T20:00:00", // 15
 					msg: "World" // 3
 				},
 				computed: {
