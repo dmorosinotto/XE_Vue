@@ -27,5 +27,8 @@
 		"url": "git+https://github.com/dmorosinotto/XE_Vue.git"
 	},
 	"author": "Daniele Morosinotto <d.morosinotto@icloud.com>",
-	"license": "MIT"
+	"license": "MIT",
+	"dependencies": {
+		"axios": "^0.18.0"
+	}
 }
