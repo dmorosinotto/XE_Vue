@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 107: v-model</title>
+		<title>XE Vue 108: v-if / v-show</title>
 	</head>
 	<body>
 		<h1>Hello</h1>
@@ -21,9 +21,14 @@
 			<div>
 				<!-- 8   -->
 				<label>Edit message: <input v-model="msg"/></label>
-				<!-- 8+bonus modifiers: https://vuejs.org/v2/api/#v-model 
-                <label>Lazy+trim: <input v-model.lazy.trim="msg"/></label>{{ msg.length }} -->
+				<!-- 8+bonus modifiers: https://vuejs.org/v2/api/#v-model -->
+				<label>Lazy+trim: <input v-model.lazy.trim="msg"/></label>{{ msg.length }}
 			</div>
+			<!-- 9 -->
+			<p v-if="msg.includes('net')">
+				.NET Rocks, but <u>JavaScript & <strong>TS</strong> WIN!</u>
+			</p>
+			<code v-show="msg.includes('java')">JAVA (never) RULEZ but is still there...</code>
 		</div>
 
 		<!-- 1 -->
