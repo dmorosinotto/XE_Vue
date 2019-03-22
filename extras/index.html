@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 302: reactivity system observe</title>
+		<title>XE Vue 303: reactivity watchers</title>
 		<!-- 19 -->
 		<style>
 			.java {
@@ -132,6 +132,22 @@
 						const event = new Date(String(this.eventDate)).getTime();
 						return Math.floor((event - today) / 1000 / 60 / 60 / 24); //gg
 					}
+				},
+				watch: {
+					// 26 https://vuejs.org/v2/guide/computed.html#Watchers
+					speaker: function(newVal, oldVal) {
+						console.warn("SPEAKER changed", oldVal, "->", newVal);
+					},
+					// 27 https://vuejs.org/v2/api/#watch
+					title: {
+						handler: function(val, old) {
+							console.info(">>> TITLE changed ->", val);
+							if (val && val.match(/TS|TypeScript/i)) {
+								this.speaker = "Daniele ^_^";
+							}
+						},
+						immediate: true // run immediatly after observation starts: BETWEEN beforeCreate AND created
+					} // 27+bonus "a.b.c": { handler: "methodName", deep: true } // USEFULL FOR COMPLEX OBJECT DATA!
 				},
 				methods: {
 					// 16
