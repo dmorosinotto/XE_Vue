@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 106: v-on modifiers</title>
+		<title>XE Vue 107: v-model</title>
 	</head>
 	<body>
 		<h1>Hello</h1>
@@ -18,6 +18,12 @@
 			<!-- 6 --><button v-on:click.once="doSomething">Click me (once)</button>
 			<!-- 6+bonus -->
 			<button @click.right="doSomething('dotnet')">do .NET (right)</button>
+			<div>
+				<!-- 8   -->
+				<label>Edit message: <input v-model="msg"/></label>
+				<!-- 8+bonus modifiers: https://vuejs.org/v2/api/#v-model 
+                <label>Lazy+trim: <input v-model.lazy.trim="msg"/></label>{{ msg.length }} -->
+			</div>
 		</div>
 
 		<!-- 1 -->
