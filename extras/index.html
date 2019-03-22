@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>XE Vue Basics</title>
+        <title>XE Vue 301: reactivity computed cache</title>
         <!-- 19 -->
         <style>
             .java {
@@ -126,6 +126,8 @@
                             : "oggi";
                     },
                     diffDays: function() {
+                        // 23 https://vuejs.org/v2/guide/reactivity.html#How-Changes-Are-Tracked
+                        console.warn("GUESS HOW MANY TIMES I'M CALLED"); // 24 , this.speaker);
                         const today = new Date().getTime(); //millisecs of today
                         const event = new Date(String(this.eventDate)).getTime();
                         return Math.floor((event - today) / 1000 / 60 / 60 / 24); //gg
