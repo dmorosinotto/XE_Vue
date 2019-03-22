@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 110: Vue component</title>
+		<title>XE Vue 111: Props + v-bind</title>
 	</head>
 	<body>
 		<h1>Hello</h1>
@@ -41,20 +41,23 @@
 			<button @click="update(Math.floor(Math.random()*arr.length))">Update</button>
 			<!-- 11 -->
 			<hr />
-			<xe-event></xe-event>
+			<xe-event v-bind:title="msg" event-date="2019-03-22T20:00:00"><!-- 12 --></xe-event>
 		</div>
 
 		<!-- 1 -->
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-		<!-- 11+bonus 
-        <script type="text/x-template" id="xe-event-tpl">
-            <div>
-                <h2>You can <a href="https://vuejs.org/v2/guide/components-edge-cases.html#X-Templates">externalize template</a></h2>
-                {{speaker}}
-            </div>
-        </script>
-        -->
+		<!-- 11+bonus -->
+		<script type="text/x-template" id="xe-event-tpl">
+			<div>
+			    <h2>You can <a href="https://vuejs.org/v2/guide/components-edge-cases.html#X-Templates">externalize template</a></h2>
+			    {{speaker}}
+			    <!-- 12 -->
+			    <article>{{ title }} </article>
+			    <aside>{{ eventDate }}</aside>
+			</div>
+		</script>
+
 		<script>
 			// 5+bonus
 			Vue.filter("capitalize", function(str) {
@@ -71,7 +74,8 @@
 				data() {
 					return { speaker: "Pluto" };
 				},
-				template: "<div>{{speaker}}</div>" // 11+bonus "#xe-event-tpl"
+				props: ["title", "eventDate"], // 12
+				template: "#xe-event-tpl" //"<div>{{speaker}}</div>" // 11+bonus "#xe-event-tpl"
 			});
 
 			// 1
