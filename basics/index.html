@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 103: computed | filters</title>
+		<title>XE Vue 104: global filter</title>
 	</head>
 	<body>
 		<h1>Hello</h1>
@@ -13,12 +13,20 @@
 			<!-- 3-->
 			{{ msg | uppercase5 }}!!!
 			<!-- 4-->
-			<br /><b>{{ lowerMsg }}</b>
+			<br /><b><!-- 5+bonus-->{{ lowerMsg | capitalize }}</b>
 		</div>
 
 		<!-- 1 -->
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		<script>
+			// 5+bonus
+			Vue.filter("capitalize", function(str) {
+				return String(str || "")
+					.split(" ")
+					.map(s => s.charAt(0).toUpperCase() + s.substr(1))
+					.join(" ");
+			});
+
 			// 1
 			var app = new Vue({
 				el: "#app", // 2
