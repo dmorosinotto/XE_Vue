@@ -18,5 +18,15 @@ export default class About extends Vue {
   arr = true;
   date = "2019-03-22T20:00:00"; // 15
   msg = "World"; // 3
+
+  // 203c copy from 116 methods // 6
+  doSomething(txt: any) {
+    this.msg = "XE" + (txt || "java"); // 6+bonus
+  }
+  // 14
+  alert(e: any) {
+    this.doSomething(e);
+    window.alert(`Handled LIKE $event ->${e}`);
+  }
 }
 </script>
