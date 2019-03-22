@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>XE Vue Basics</title>
+        <!-- 19 -->
+        <style>
+            .java {
+                background-color: #666;
+            }
+            .xe {
+                font-family: Verdana, Tahoma, Arial, sans-serif;
+                color: #da3636;
+                font-weight: 900;
+            }
+            .ts strong {
+                color: #007acc;
+                font-size: 40px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Hello</h1>
+        <!-- 2 -->
+        <div id="app">
+            <!-- 3-->
+            {{ msg | uppercase5 }}!!!
+            <!-- 4-->
+            <br /><b><!-- 5+bonus-->{{ lowerMsg | capitalize }}</b>
+            <!-- 7 modifiers: https://vuejs.org/v2/api/#v-on -->
+            <!-- 6 --><button v-on:click.once="doSomething">Click me (once)</button>
+            <!-- 6+bonus -->
+            <button @click.right="doSomething('dotnet')">do .NET (right)</button>
+            <div>
+                <!-- 8   -->
+                <label>Edit message: <input v-model="msg"/></label>
+                <!-- 8+bonus modifiers: https://vuejs.org/v2/api/#v-model -->
+                <label>Lazy+trim: <input v-model.lazy.trim="msg"/></label>{{ msg.length }}
+            </div>
+            <!-- 19 -->
+            <p v-if="msg.includes('net')" :class="{ts: arr.length % 2, xe: msg.toUpperCase().includes('XE')}">
+                .NET Rocks, but <u>JavaScript & <strong>TS</strong> WIN!</u>
+            </p>
+            <!-- 20 -->
+            <code v-bind:class="['java']" v-show="msg.includes('java')">JAVA (never) RULEZ but is still there...</code>
+            <!-- 10 -->
+            <ul>
+                <!-- 10+bonus -->
+                <li v-for="(item,idx) in arr" :key="idx">
+                    <b>{{typeof item}}</b> @{{ idx }}
+                    {{ item }}
+                </li>
+            </ul>
+            <button @click="addTo(true)">Start</button><button @click="addTo()">End</button>
+            <button @click="update(Math.floor(Math.random()*arr.length))">Update</button>
+            <!-- 11 -->
+            <hr />
+            <div v-if="arr">
+                <!-- 17 -->
+                <xe-event :title="msg" v-bind:event-date.sync="date" @like.once="alert"><!-- 12 + 14 --></xe-event>
+                <!-- 15 + 16+bonus .sync -->
+            </div>
+            <hr />
+            <label>On parent DATE = <input v-model="date"/></label>
+            <button @click="arr=!arr"><!-- 17 -->TOGGLE</button>
+        </div>
+
+        <!-- 1 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <!-- 11+bonus -->
+        <script type="text/x-template" id="xe-event-tpl">
+            <div>
+                <h2>You can <a href="https://vuejs.org/v2/guide/components-edge-cases.html#X-Templates">externalize template</a></h2>
+                {{speaker}}<!-- 14 --><button @click="$emit('like', speaker)">I &hearts;</button>
+                <!-- 12 -->
+                <article>{{ title }} <!-- 13 -->
+                    <i :style="{color:  diffDays<0 ? 'red' : 'green', 'font-size': 24/diffDays + 'px'}"><!-- 21 -->
+                        {{ timeAgo }}</i> </article>
+                <aside>{{ eventDate | dateformat('dd/MM/yy alle HH:mm') }}</aside>
+                <!-- 16 -->
+                <button @click="addDay(+1)">+</button> <button @click="addDay(-1)">-</button>
+            </div>
+        </script>
+
+        <script>
+            // 5+bonus
+            Vue.filter("capitalize", function(str) {
+                return String(str || "")
+                    .split(" ")
+                    .map(s => s.charAt(0).toUpperCase() + s.substr(1))
+                    .join(" ");
+            });
+
+            // 11
+            Vue.component("xe-event", {
+                //data: { speaker: "Pluto" }, //THIS DOESN'T WORKS!
+                //MUST BE A FUNCITION THAT RETURN INSTANCE DATA !!!
+                data() {
+                    return { speaker: "Pluto" };
+                },
+                props: {
+                    // 12 ["title", "eventDate"],
+                    title: String,
+                    eventDate: {
+                        //18    https://vuejs.org/v2/guide/components-props.html#Prop-Validation
+                        type: String,
+                        //required: true
+                        //default: new Date().toISOString()
+                        validator: function(value) {
+                            // The value must be a valid Date string
+                            let d = new Date(String(value));
+                            return d && !isNaN(d.getTime());
+                        }
+                    }
+                },
+                computed: {
+                    // 13
+                    timeAgo: function() {
+                        return this.diffDays > 0
+                            ? `tra ${this.diffDays}gg`
+                            : this.diffDays < -1
+                            ? `era ${-this.diffDays}gg fà`
+                            : "oggi";
+                    },
+                    diffDays: function() {
+                        const today = new Date().getTime(); //millisecs of today
+                        const event = new Date(String(this.eventDate)).getTime();
+                        return Math.floor((event - today) / 1000 / 60 / 60 / 24); //gg
+                    }
+                },
+                methods: {
+                    // 16
+                    addDay: function(n) {
+                        let d = new Date(String(this.eventDate));
+                        d.setDate(d.getDate() + n);
+                        //this.eventDate = d.toISOString(); //DON'T WORK props IS ONE-WAY DOWN
+                        // 16+bonus //TODO: MUST USE $emit EVENT update:eventDate -> .sync
+                        this.$emit("update:eventDate", d.toISOString());
+                    }
+                },
+                // 17 READ MORE: https://vuejs.org/v2/guide/instance.html#Lifecycle-Diagram
+                beforeCreate() {
+                    console.log("life-cycle hooks BEFORECREATE @" /*, this.eventDate */); //NOT JET INITIALIZED!!!
+                },
+                created() {
+                    console.log("life-cycle hooks CREATED @", this.eventDate);
+                },
+                updated() {
+                    console.log("life-cycle hooks UPDATED @", this.eventDate, this.title);
+                },
+                destroyed() {
+                    console.log("life-cycle hooks DESTROYED @", this.eventDate);
+                },
+                template: "#xe-event-tpl" //"<div>{{speaker}}</div>" // 11+bonus "#xe-event-tpl"
+            });
+            // 13+bonus
+            const pad2 = n => ("00" + n).substr(-2);
+            Vue.filter("dateformat", function(value, fmt) {
+                const d = new Date(String(value));
+                return (fmt || "dd/MM/yyyy") // 13+bonus
+                    .replace("dd", pad2(d.getDate()))
+                    .replace("MM", pad2(d.getMonth() + 1))
+                    .replace("yyyy", d.getFullYear())
+                    .replace("yy", pad2(d.getFullYear()))
+                    .replace("HH", pad2(d.getHours()))
+                    .replace("mm", pad2(d.getMinutes()));
+            });
+
+            // 1
+            var app = new Vue({
+                el: "#app", // 2
+                data: {
+                    // 10
+                    arr: ["Pippo", 123, { e: "Pluto" }],
+                    date: "2019-03-22T20:00:00", // 15
+                    msg: "World" // 3
+                },
+                computed: {
+                    // 4
+                    lowerMsg() {
+                        return this.msg.toLowerCase();
+                    }
+                },
+                filters: {
+                    // 5
+                    uppercase5(s) {
+                        return String(s || "").toUpperCase();
+                    }
+                },
+                methods: {
+                    // 6
+                    doSomething(txt) {
+                        this.msg = "XE" + (txt || "java"); // 6+bonus
+                    },
+                    // 14
+                    alert(e) {
+                        this.doSomething(e);
+                        window.alert(`Handled LIKE $event ->${e}`);
+                    },
+                    // 10+bonus
+                    addTo(first) {
+                        console.log("ADDTO", first ? "first" : "last");
+                        if (!first) {
+                            //this.arr.push(this.msg); //Vue array methods rewrited
+                            this.arr = [...this.arr, this.msg]; //euristiscts works!
+                        } else {
+                            this.arr.unshift(this.msg); //https://vuejs.org/v2/guide/list.html#Mutation-Methods
+                            //this.arr = [this.msg, ...this.arr];
+                        }
+                    },
+                    update(idx) {
+                        console.log("UPDATE", idx);
+                        //this.arr[idx] = this.msg; //DON'T WORK https://vuejs.org/v2/guide/list.html#Replacing-an-Array
+                        this.$set(this.arr, idx, this.msg); //You must help the Vue "reactivity system" ...until 3.0 ^_^
+                    }
+                }
+            });
+
+            //TODO: OPEN CONSOLE AND RUN
+            //app.msg = "XE"; // 3+bonus
+        </script>
+    </body>
+</html>
