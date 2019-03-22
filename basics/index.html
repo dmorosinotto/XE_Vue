@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>XE Vue 108: v-if / v-show</title>
+		<title>XE Vue 109: v-for</title>
 	</head>
 	<body>
 		<h1>Hello</h1>
@@ -29,6 +29,16 @@
 				.NET Rocks, but <u>JavaScript & <strong>TS</strong> WIN!</u>
 			</p>
 			<code v-show="msg.includes('java')">JAVA (never) RULEZ but is still there...</code>
+			<!-- 10 -->
+			<ul>
+				<li v-for="item in arr">
+					<!-- 10+bonus <li v-for="(item,idx) in arr" :key="idx">
+                    <b>{{typeof item}}</b> @{{ idx }} -->
+					{{ item }}
+				</li>
+			</ul>
+			<button @click="addTo(true)">Start</button><button @click="addTo()">End</button>
+			<button @click="update(Math.floor(Math.random()*arr.length))">Update</button>
 		</div>
 
 		<!-- 1 -->
@@ -46,6 +56,8 @@
 			var app = new Vue({
 				el: "#app", // 2
 				data: {
+					// 10
+					arr: ["Pippo", 123, { e: "Pluto" }],
 					msg: "World" // 3
 				},
 				computed: {
@@ -64,6 +76,22 @@
 					// 6
 					doSomething(txt) {
 						this.msg = "XE" + (txt || "java"); // 6+bonus
+					},
+					// 10+bonus
+					addTo(first) {
+						console.log("ADDTO", first ? "first" : "last");
+						if (!first) {
+							//this.arr.push(this.msg); //Vue array methods rewrited
+							this.arr = [...this.arr, this.msg]; //euristiscts works!
+						} else {
+							this.arr.unshift(this.msg); //https://vuejs.org/v2/guide/list.html#Mutation-Methods
+							//this.arr = [this.msg, ...this.arr];
+						}
+					},
+					update(idx) {
+						console.log("UPDATE", idx);
+						//this.arr[idx] = this.msg; //DON'T WORK https://vuejs.org/v2/guide/list.html#Replacing-an-Array
+						this.$set(this.arr, idx, this.msg); //You must help the Vue "reactivity system" ...until 3.0 ^_^
 					}
 				}
 			});
