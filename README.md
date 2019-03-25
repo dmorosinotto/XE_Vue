@@ -17,4 +17,6 @@ I've create a step-by-step tutorial using `GIT tag` for every single commit, you
 
 And then you can simply navigate step-by-step with `git go XYZ` where XYZ is the tag (ex: 101 - 203 etc...)
 
+If you need some more [RESOURCES](slides/RESOURCES.md) I linked a lot of useful material here.
+
 Hope you enjoy it! - With all my :heart: to [VueJS](https://vuejs.org) & [XE](https://www.xedotnet.org) Community

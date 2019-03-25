@@ -18,7 +18,7 @@
 113 = (14=v-on+$emit 'like', 14+bonus=method alert)
 114 = two-way v-bind.sync (15=date su app, 16=v-bind:.sync, 16+bonus: \$emit update:xxx)
 115 = (17=life-cycle hooks + toggle) (18=Prop type+validator)
-116 = Aggiungere discorso degli style/css dinamici (19= :class in base a 'java' 'net')
+116 = style/css dinamici (19= :class in base a 'java' 'net')
 (20= class fisso + :class [array]) (21= :style in base a diffDays colore/dimensione px)
 ```
 
@@ -28,37 +28,37 @@
 200 = MOSTRO CLI per inizializzare progetto da zero (seleziono TS + Router e basta) giro di visita su scaffold del progetto mostro navigazione Vue.Router -> pagina Home / About
 -   (200+bonus) = Modificare codice di Home.vue per mostrare EAGER/LAZY load del HelloWorld
 201 = Porto codice del componente xe-event
--   (201a x-template) (201b JS object) (201c aggiungo JSDOC per avere TS intelligente)
+-   (201a x-template) (201b JS object) (201c aggiungo JSDOC per avere TS intellisence)
 202 = Porto codice del globalFilter che è utilizzato nel componente
 -   (202a filter.ts + TS annotation) (202b main.ts)
-203 = Modifico About.0.vue per aggiungere utilizzo di base del xe-event con dati statici
+203 = Modifico About.vue per aggiungere utilizzo di base del component xe-event con dati statici
 -   (203a import component XeEvent) (203b copy data statici) (203c copy methods) (203d html)
 ```
 
-> A QUESTO PUNTO LANCIO cd vuecli && npm run serve OPPURE LANCIO vue ui e lancio Task serve
+> A QUESTO PUNTO LANCIO cd vuecli && npm run serve OPPURE LANCIO vue ui ed eseguo Task serve
 > FACCIO UN GIRO DI PROVA DEL CODICE APPLICATIVO (DOVREBBE FUNZIONAR TUTTO COME PRIMA YEAH)
-> DATO CHE CI SONO AGGIUNGO SEMPRE DA vue ui LA DIPENDENZA DA axios per fare richieste http
+> SEMPRE DA vue ui MOSTRO COME AGGIUNGERE LA DIPENDENZA AD axios per fare richieste http
 
 ```terminal
-204 = Aggiungo service.ts con logica tutta TS
+204 = Aggiungo service.ts con logica tutta TS (model interface + funzioni async/await <- Promise)
 -   (204a model interface + type) + (204b helper safeGet + \_cache) (204c chiamate async/await)
 205 = Modifico About.vue per aggiungere logica di chiamate API utilizzo servizio
 -   (205a import \* as http + load) (205b printout event cliccato) (205c cambio html for+load)
 ```
 
-> FACCIO ALTRO GIRO DI PROVA E DOVREBBE FUNZIONARE TUTTO -> CARICA EVENTI + RELOAD + ALERT
+> RITORNO A MOSTRARE npm run serve -> DOVREBBE FUNZIONARE TUTTO: CARICA EVENTI + RELOAD + ALERT
 
 ```
-206 = Faccio nuovo componente XeCard (refactor con vue-class-component + @vue-property-decorators sintassi alla NGx + @Decorators + TS ALL THE WAY DOWN!
+206 = Faccio nuovo componente XeCard (refactor con CLASS-SYNTAX + TS con vue-class-component + @vue-property-decorators sintassi alla NGx + @Decorators + TS ALL THE WAY DOWN!
 - (206a data() -> fields) (206b props -> @Prop) (206c computed -> getters) (206d methods)
 - (206e watcher -> method + @Watch) (206f life-cycle hooks)
 207 = Creo pagina Detail.vue che utilizza componente XeCard + @Watch(\$route) + v-bind=evt
 - (207a creo componente che usa XeCard) (207b usa @Watch x fetchData) (207c v-bind=Object)
-208 = Modifico router.ts per aggiungere la "detail"
+208 = Modifico router.ts per aggiungere la "detail" (route parametrica /detail/:id)
 209 = Modifico About.vue per fare link che salta su pagina detail passando {params: id}
 ```
 
-> GIRO DI PROVA CHE TUTTO FUNZIONI CON MEMORIZZAZIONE LINK + CAMBIO DATA TWO-WAY TRA LE SCHERMATE GRAZIE ALLA \_cache SU SERVICE CONDIVISO (QUALCUNO HA DETTO STATE-MANAGEMENT?)
+> ULTIMA DEMO CHE MOSTRA CHE TUTTO FUNZIONI CON MEMORIZZAZIONE LIKE + CAMBIO DATA TWO-WAY TRA LE SCHERMATE GRAZIE ALLA \_cache SU SERVICE CONDIVISO ("state-management" basico, senza Vuex ^\_^ )
 
 ## ADVANCED DEEP VUE REACTIVITY SYSTEM
 
@@ -71,3 +71,5 @@
 305 = render funciton (29= trasformo v-slot -> h<size> -> VNode) (29+bonus=switch NO)
 306 = scoped slot (30= aggiungo xe-more con internal ctx)
 ```
+
+[LINK RISORSE UTILI](RESOURCES.md)
